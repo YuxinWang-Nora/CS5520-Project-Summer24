@@ -6,8 +6,10 @@ export default function App() {
   const appName = "My First React Native App";
   return (
     <View style={styles.container}>
-      <Header />
-      <Text>Welcome to {appName}</Text>
+      <Header name={appName} theme="dark">
+        <Text>Child1</Text>
+        <Text>Child2</Text>
+      </Header>
       <StatusBar style="auto" />
     </View>
   );

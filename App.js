@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
 
@@ -49,10 +49,12 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     backgroundColor: 'red',
+    alignItems: 'center',
   },
 
   bottomContainer: {
     flex: 4,
-    backgroundColor: 'black',
+    backgroundColor: 'blue',
+    alignItems: 'center',
   }
 });

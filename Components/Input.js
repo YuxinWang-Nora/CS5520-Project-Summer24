@@ -1,9 +1,12 @@
-import { Text, TextInput } from 'react-native';
+import { Button, Text, TextInput } from 'react-native';
 import React, { useState } from 'react';
 
 const Input = () => {
     const [text, setText] = useState('');
     const [showThankYou, setShowThankYou] = useState(false);
+    const handleConfirm = () => {
+        console.log(text);
+    }
 
     return (
         <>
@@ -20,6 +23,9 @@ const Input = () => {
             />
 
             {showThankYou && <Text>Thank you.</Text>}
+            <Button title="Confirm" onPress={() => {
+                handleConfirm();
+            }} />
         </>
     );
 };

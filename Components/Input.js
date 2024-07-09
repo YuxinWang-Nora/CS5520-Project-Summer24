@@ -28,9 +28,11 @@ const Input = (props) => {
                 />
 
                 {showThankYou && <Text>Thank you.</Text>}
-                <Button title="Confirm" onPress={() => {
-                    handleConfirm();
-                }} />
+                <View style={styles.buttonStyle}>
+                    <Button title="Confirm" onPress={() => {
+                        handleConfirm();
+                    }} />
+                </View>
             </View>
         </Modal>
     );
@@ -42,6 +44,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    buttonStyle: {
+        width: "30%",
+        margin: 5,
+        backgroundColor: "red",
     },
 });
 

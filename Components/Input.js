@@ -13,25 +13,28 @@ const Input = (props) => {
     }
 
     return (
-        <Modal animationType='slide' visible={props.isModuleVisiable}>
-            <View style={styles.container}>
-                <TextInput
-                    placeholder="Type here to input!"
-                    onChangeText={(text) => {
-                        setText(text);
-                        setShowThankYou(false);
-                    }}
-                    value={text}
-                    autoFocus={true}
-                    onBlur={() => setShowThankYou(true)}
-                    onFocus={() => setShowThankYou(false)}
-                />
+        <Modal animationType='slide' visible={props.isModuleVisiable} transparent={true}>
+            <View style={styles.modalBackground}>
+                <View style={styles.container}>
+                    <TextInput
+                        style={styles.inputStyle}
+                        placeholder="Type here to input!"
+                        onChangeText={(text) => {
+                            setText(text);
+                            setShowThankYou(false);
+                        }}
+                        value={text}
+                        autoFocus={true}
+                        onBlur={() => setShowThankYou(true)}
+                        onFocus={() => setShowThankYou(false)}
+                    />
 
-                {showThankYou && <Text>Thank you.</Text>}
-                <View style={styles.buttonStyle}>
-                    <Button title="Confirm" onPress={() => {
-                        handleConfirm();
-                    }} />
+                    {showThankYou && <Text>Thank you.</Text>}
+                    <View style={styles.buttonStyle}>
+                        <Button title="Confirm" onPress={() => {
+                            handleConfirm();
+                        }} />
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -40,8 +43,10 @@ const Input = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        width: 300,
+        height: 200,
+        borderRadius: 10,
+        backgroundColor: '#a9a9a9',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -49,7 +54,22 @@ const styles = StyleSheet.create({
     buttonStyle: {
         width: "30%",
         margin: 5,
-        backgroundColor: "red",
+        //backgroundColor: 'black',
+    },
+
+    modalBackground: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    inputStyle: {
+        color: 'red',
+        fontSize: 20,
+        height: 40,
+        borderColor: 'purple',
+        borderWidth: 1,
     },
 });
 

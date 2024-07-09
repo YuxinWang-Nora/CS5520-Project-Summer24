@@ -25,7 +25,7 @@ export default function App() {
       <Input inputHandler={handleInputData} isModuleVisiable={isModuleVisiable} setIsModuleVisiable={setIsModuleVisiable} />
       <Button title="Add a goal" onPress={() => setIsModuleVisiable(true)} />
       {/* Use the state variable to render the received data*/}
-      <Text>{receivedText}</Text>
+      <Text style={styles.textStyles}>{receivedText}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -37,5 +37,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  textStyles: {
+    color: 'red',
+    fontSize: 20,
   },
 });

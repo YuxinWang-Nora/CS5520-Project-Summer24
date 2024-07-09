@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView } from 'react-native';
 import Header from './Components/Header';
 import Input from './Components/Input';
 import React, { useState } from 'react';
@@ -17,17 +17,19 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      {/* <Header name={appName} theme="dark">
-        <Text>Child1</Text>
-        <Text>Child2</Text>
-      </Header> */}
-      <Input inputHandler={handleInputData} isModuleVisiable={isModuleVisiable} setIsModuleVisiable={setIsModuleVisiable} />
-      <Button title="Add a goal" onPress={() => setIsModuleVisiable(true)} />
-      {/* Use the state variable to render the received data*/}
-      <Text style={styles.textStyle}>{receivedText}</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topContainer}>
+        <Header name={appName} theme="dark"> </Header>
+        <Button title="Add a goal" onPress={() => setIsModuleVisiable(true)} />
+      </View>
+
+      <Input inputHandler={handleInputData} isModuleVisiable={isModuleVisiable} />
+      <View style={styles.bottomContainer}>
+        {/* Use the state variable to render the received data*/}
+        <Text style={styles.textStyle}>{receivedText}</Text>
+      </View>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -43,4 +45,14 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 20,
   },
+
+  topContainer: {
+    flex: 1,
+    backgroundColor: 'red',
+  },
+
+  bottomContainer: {
+    flex: 4,
+    backgroundColor: 'black',
+  }
 });

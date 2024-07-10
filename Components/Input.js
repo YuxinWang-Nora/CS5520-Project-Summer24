@@ -11,6 +11,12 @@ const Input = (props) => {
         // Call the received callback function
         props.inputHandler(text);
         props.hideModule();
+        setText('');
+    }
+
+    const handleCancel = () => {
+        props.hideModule();
+        setText('');
     }
 
     return (
@@ -36,7 +42,7 @@ const Input = (props) => {
                             handleConfirm();
                         }} />
                         <Button title="Cancel" onPress={() => {
-                            props.hideModule();
+                            handleCancel();
                         }} />
                     </View>
                 </View>

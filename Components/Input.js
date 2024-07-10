@@ -56,9 +56,12 @@ const styles = StyleSheet.create({
     },
 
     buttonStyle: {
-        width: "30%",
-        margin: 5,
+        width: "100%",
+        margin: 15,
         //backgroundColor: 'black',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
     },
 
     modalBackground: {

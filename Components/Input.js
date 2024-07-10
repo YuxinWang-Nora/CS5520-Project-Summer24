@@ -1,4 +1,4 @@
-import { Button, Text, TextInput, StyleSheet, View, Modal } from 'react-native';
+import { Button, Text, TextInput, StyleSheet, View, Modal, Image } from 'react-native';
 import React, { useState } from 'react';
 
 const Input = (props) => {
@@ -23,6 +23,17 @@ const Input = (props) => {
         <Modal animationType='slide' visible={props.isModuleVisiable} transparent={true}>
             <View style={styles.modalBackground}>
                 <View style={styles.container}>
+                    <Image
+                        style={styles.imageStyle}
+                        source={{ url: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+                        alt="target image from network"
+                    />
+                    <Image
+                        style={styles.imageStyle}
+                        alt="target image from assets folder"
+                        source={require('../assets/2617812.png')}
+                    />
+
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Type here to input!"
@@ -58,7 +69,7 @@ const Input = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: 300,
-        height: 200,
+        //height: 200,
         borderRadius: 10,
         backgroundColor: '#a9a9a9',
         alignItems: 'center',
@@ -87,6 +98,11 @@ const styles = StyleSheet.create({
         height: 40,
         borderColor: 'purple',
         borderWidth: 1,
+    },
+
+    imageStyle: {
+        width: 100,
+        height: 100,
     },
 });
 

@@ -41,9 +41,13 @@ const Input = (props) => {
                         <Button title="Cancel" onPress={() => {
                             handleCancel();
                         }} />
-                        <Button title="Confirm" onPress={() => {
-                            handleConfirm();
-                        }} />
+                        <Button
+                            title="Confirm"
+                            disabled={text.length === 0}
+                            onPress={() => {
+                                handleConfirm();
+                            }}
+                        />
                     </View>
                 </View>
             </View>

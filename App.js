@@ -16,6 +16,10 @@ export default function App() {
     setIsModuleVisiable(false);
   }
 
+  function hideModule() {
+    setIsModuleVisiable(false);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -23,7 +27,11 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setIsModuleVisiable(true)} />
       </View>
 
-      <Input inputHandler={handleInputData} isModuleVisiable={isModuleVisiable} />
+      <Input
+        inputHandler={handleInputData}
+        isModuleVisiable={isModuleVisiable}
+        hideModule={hideModule}
+      />
       <View style={styles.bottomContainer}>
         {/* Use the state variable to render the received data*/}
         <Text style={styles.textStyle}>{receivedText}</Text>

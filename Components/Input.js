@@ -10,6 +10,7 @@ const Input = (props) => {
         console.log("User has typed", text);
         // Call the received callback function
         props.inputHandler(text);
+        props.hideModule();
     }
 
     return (
@@ -33,6 +34,9 @@ const Input = (props) => {
                     <View style={styles.buttonStyle}>
                         <Button title="Confirm" onPress={() => {
                             handleConfirm();
+                        }} />
+                        <Button title="Cancel" onPress={() => {
+                            props.hideModule();
                         }} />
                     </View>
                 </View>

@@ -25,13 +25,13 @@ const Input = (props) => {
                 <View style={styles.container}>
                     <Image
                         style={styles.imageStyle}
-                        source={{ url: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+                        source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
                         alt="target image from network"
                     />
                     <Image
                         style={styles.imageStyle}
-                        alt="target image from assets folder"
                         source={require('../assets/2617812.png')}
+                        alt="target image from assets folder"
                     />
 
                     <TextInput
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     container: {
         width: 300,
         //height: 200,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#a9a9a9',
         alignItems: 'center',
         justifyContent: 'center',
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
 
     buttonStyle: {
         width: "80%",
-        margin: 10,
         //backgroundColor: 'black',
         flexDirection: 'row',
         alignItems: 'center',
@@ -97,13 +96,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderColor: 'purple',
         borderWidth: 1,
-        margin: 15,
+        margin: 1,
     },
 
     imageStyle: {
         width: 100,
         height: 100,
-        margin: 10,
+        margin: 1,
     },
 });
 

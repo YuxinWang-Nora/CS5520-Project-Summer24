@@ -38,11 +38,11 @@ const Input = (props) => {
 
                     {showThankYou && <Text>Thank you.</Text>}
                     <View style={styles.buttonStyle}>
-                        <Button title="Confirm" onPress={() => {
-                            handleConfirm();
-                        }} />
                         <Button title="Cancel" onPress={() => {
                             handleCancel();
+                        }} />
+                        <Button title="Confirm" onPress={() => {
+                            handleConfirm();
                         }} />
                     </View>
                 </View>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
 
     inputStyle: {
-        color: 'red',
+        color: 'black',
         fontSize: 20,
         height: 40,
         borderColor: 'purple',

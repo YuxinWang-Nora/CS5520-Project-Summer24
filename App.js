@@ -34,6 +34,7 @@ export default function App() {
       />
       <View style={styles.bottomContainer}>
         {/* Use the state variable to render the received data*/}
+        <Text style={styles.textStyle}>Your Goal is to:</Text>
         <Text style={styles.textStyle}>{receivedText}</Text>
       </View>
       <StatusBar style="auto" />
@@ -50,8 +51,9 @@ const styles = StyleSheet.create({
   },
 
   textStyle: {
-    color: 'red',
+    color: 'black',
     fontSize: 20,
+    margin: 10,
   },
 
   topContainer: {

@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     },
 
     buttonStyle: {
-        width: "100%",
-        margin: 15,
+        width: "80%",
+        margin: 10,
         //backgroundColor: 'black',
         flexDirection: 'row',
         alignItems: 'center',
@@ -95,14 +95,15 @@ const styles = StyleSheet.create({
     inputStyle: {
         color: 'black',
         fontSize: 20,
-        height: 40,
         borderColor: 'purple',
         borderWidth: 1,
+        margin: 15,
     },
 
     imageStyle: {
         width: 100,
         height: 100,
+        margin: 10,
     },
 });
 

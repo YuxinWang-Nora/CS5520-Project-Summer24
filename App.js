@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import Header from './Components/Header';
 import Input from './Components/Input';
 import React, { useState } from 'react';
@@ -9,7 +9,7 @@ export default function App() {
   const appName = "My First App";
   //const [text, setText] = useState('');
   //const [receivedText, setReceivedText] = useState('');
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState([""]);
   const [isModuleVisiable, setIsModuleVisiable] = useState(false);
 
   function handleInputData(data) {
@@ -46,7 +46,7 @@ export default function App() {
         {/* <Text style={styles.textStyle}>Your Goal is to:</Text> */}
         {/* <Text style={styles.textStyle}>{receivedText}</Text> */}
         {/* array.map */}
-        <ScrollView>
+        {/* <ScrollView>
           {goals?.map((goalObjext) => {
             console.log(goalObjext);
             return (
@@ -55,7 +55,16 @@ export default function App() {
               </View>
             )
           })}
-        </ScrollView>
+        </ScrollView> */}
+
+        <FlatList>
+          data={goals}
+          renderItem={({ item }) => (
+            <View style={styles.textContainer}>
+              <Text style={styles.textStyle}>{item.text}</Text>
+            </View>
+          )}
+        </FlatList>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>

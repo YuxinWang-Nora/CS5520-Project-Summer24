@@ -29,6 +29,11 @@ export default function App() {
     setIsModuleVisiable(false);
   }
 
+  function deleteGoal(id) {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== id);
+    });
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +56,7 @@ export default function App() {
           {goals?.map((goalObjext) => {
             console.log(goalObjext);
             return (
-              <GoalItem id={goalObjext.id} text={goalObjext.text} />
+              <GoalItem id={goalObjext.id} text={goalObjext.text} deletHandler={deleteGoal} />
             )
           })}
         </ScrollView>

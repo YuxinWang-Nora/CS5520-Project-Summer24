@@ -16,6 +16,10 @@ export default function App() {
     setIsModuleVisiable(false);
   }
 
+  function hideModule() {
+    setIsModuleVisiable(false);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -23,9 +27,14 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setIsModuleVisiable(true)} />
       </View>
 
-      <Input inputHandler={handleInputData} isModuleVisiable={isModuleVisiable} />
+      <Input
+        inputHandler={handleInputData}
+        isModuleVisiable={isModuleVisiable}
+        hideModule={hideModule}
+      />
       <View style={styles.bottomContainer}>
         {/* Use the state variable to render the received data*/}
+        <Text style={styles.textStyle}>Your Goal is to:</Text>
         <Text style={styles.textStyle}>{receivedText}</Text>
       </View>
       <StatusBar style="auto" />
@@ -37,22 +46,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
 
   textStyle: {
-    color: 'red',
+    color: 'black',
     fontSize: 20,
+    margin: 10,
   },
 
   topContainer: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
+    alignItems: 'center',
   },
 
   bottomContainer: {
     flex: 4,
-    backgroundColor: 'black',
+    backgroundColor: '#fdf',
+    alignItems: 'center',
   }
 });

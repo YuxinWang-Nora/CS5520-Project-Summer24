@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 
 export default function App() {
-  const appName = "My First React Native App";
+  const appName = "My First App";
   const [text, setText] = useState('');
   const [receivedText, setReceivedText] = useState('');
   const [isModuleVisiable, setIsModuleVisiable] = useState(false);

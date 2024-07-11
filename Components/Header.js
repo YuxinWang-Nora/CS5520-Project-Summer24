@@ -11,12 +11,13 @@ const Header = ({ name }) => {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    color: 'black',
+    color: 'purple',
     fontSize: 20,
     //height: 40,
     borderColor: 'purple',
     borderWidth: 2,
     margin: 15,
+    padding: 5,
   }
 });
 

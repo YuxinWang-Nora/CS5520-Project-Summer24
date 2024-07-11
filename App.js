@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView } from 'react-native';
 import Header from './Components/Header';
 import Input from './Components/Input';
 import React, { useState } from 'react';
@@ -7,18 +7,27 @@ import React, { useState } from 'react';
 
 export default function App() {
   const appName = "My First App";
-  const [text, setText] = useState('');
-  const [receivedText, setReceivedText] = useState('');
+  //const [text, setText] = useState('');
+  //const [receivedText, setReceivedText] = useState('');
+  const [goals, setGoals] = useState([]);
   const [isModuleVisiable, setIsModuleVisiable] = useState(false);
+
   function handleInputData(data) {
     console.log("callback fn called", data);
-    setReceivedText(data);
+    //setReceivedText(data);
     setIsModuleVisiable(false);
+
+    // define a new object {text: data} 
+    const newGoal = { text: data, id: Math.random() };
+    setGoals((currentGoals) =>
+      [...currentGoals, newGoal]
+    );
   }
 
   function hideModule() {
     setIsModuleVisiable(false);
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,8 +43,19 @@ export default function App() {
       />
       <View style={styles.bottomContainer}>
         {/* Use the state variable to render the received data*/}
-        <Text style={styles.textStyle}>Your Goal is to:</Text>
-        <Text style={styles.textStyle}>{receivedText}</Text>
+        {/* <Text style={styles.textStyle}>Your Goal is to:</Text> */}
+        {/* <Text style={styles.textStyle}>{receivedText}</Text> */}
+        {/* array.map */}
+        <ScrollView>
+          {goals?.map((goalObjext) => {
+            console.log(goalObjext);
+            return (
+              <View key={goalObjext.id} style={styles.textContainer}>
+                <Text style={styles.textStyle}>{goalObjext.text}</Text>
+              </View>
+            )
+          })}
+        </ScrollView>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -68,5 +88,12 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: '#fdf',
     alignItems: 'center',
-  }
+    rowGap: 10,
+  },
+
+  textContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
 });

@@ -10,7 +10,7 @@ export default function Home({ navigation }) {
     const appName = "My First App";
     //const [text, setText] = useState('');
     //const [receivedText, setReceivedText] = useState('');
-    const [goals, setGoals] = useState([""]);
+    const [goals, setGoals] = useState([]);
     const [isModuleVisiable, setIsModuleVisiable] = useState(false);
 
     function handleInputData(data) {
@@ -35,9 +35,10 @@ export default function Home({ navigation }) {
         });
     }
 
-    function handlePressGoal() {
-        console.log("Goal is pressed");
-        navigation.navigate('Details');
+    function handlePressGoal(pressGoal) {
+        console.log("Goal is pressed", pressGoal);
+        // navigate to the details page and pass the data
+        navigation.navigate('Details', { goalObject: pressGoal });
     }
 
     return (
@@ -57,23 +58,23 @@ export default function Home({ navigation }) {
                 {/* <Text style={styles.textStyle}>Your Goal is to:</Text> */}
                 {/* <Text style={styles.textStyle}>{receivedText}</Text> */}
                 {/* array.map */}
-                <ScrollView>
+                {/* <ScrollView>
                     {goals?.map((goalObjext) => {
                         console.log(goalObjext);
                         return (
-                            <GoalItem id={goalObjext.id} text={goalObjext.text} deletHandler={deleteGoal} pressHandler={handlePressGoal} />
+                            <GoalItem key={goalObjext.id} goal={goalObjext} deletHandler={deleteGoal} pressHandler={handlePressGoal} />
                         )
                     })}
-                </ScrollView>
+                </ScrollView> */}
 
-                {/* <FlatList>
-          data={goals}
-          renderItem={({ item }) => (
-            <View style={styles.textContainer}>
-              <Text style={styles.textStyle}>{item.text}</Text>
-            </View>
-          )}
-        </FlatList> */}
+                {goals.length === 0 ? (<Text style={styles.textStyle}>Please add a goal</Text>) : (<FlatList
+                    data={goals}
+                    renderItem={({ item }) => {
+                        console.log(item)
+                        return (<GoalItem goal={item} deleteHandler={deleteGoal} pressHandler={handlePressGoal} />)
+                    }}>
+                </FlatList>
+                )}
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>

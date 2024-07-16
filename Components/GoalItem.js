@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, Button, } from 'react-native';
 import React from 'react';
 
-const GoalItem = (props) => {
+const GoalItem = ({ goal, deleteHandler, pressHandler }) => {
+    console.log(goal)
     return (
-        <View key={props.id} style={styles.textContainer}>
-            <Text style={styles.textStyle}>{props.text}</Text>
-            <Button title="X" onPress={() => props.deletHandler(props.id)} />
-            <Button title="Details" onPress={() => props.pressHandler()} />
+        <View key={goal.id} style={styles.textContainer}>
+            <Text style={styles.textStyle}>{goal.text}</Text>
+            <Button title="X" onPress={() => deleteHandler(goal.id)} />
+            <Button title="Details" onPress={() => pressHandler(goal)} />
         </View>
     );
 }

@@ -6,7 +6,7 @@ import GoalItem from './GoalItem';
 import React, { useState } from 'react';
 
 
-export default function Home() {
+export default function Home({ navigation }) {
     const appName = "My First App";
     //const [text, setText] = useState('');
     //const [receivedText, setReceivedText] = useState('');
@@ -35,6 +35,11 @@ export default function Home() {
         });
     }
 
+    function handlePressGoal() {
+        console.log("Goal is pressed");
+        navigation.navigate('Details');
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.topContainer}>
@@ -56,7 +61,7 @@ export default function Home() {
                     {goals?.map((goalObjext) => {
                         console.log(goalObjext);
                         return (
-                            <GoalItem id={goalObjext.id} text={goalObjext.text} deletHandler={deleteGoal} />
+                            <GoalItem id={goalObjext.id} text={goalObjext.text} deletHandler={deleteGoal} pressHandler={handlePressGoal} />
                         )
                     })}
                 </ScrollView>

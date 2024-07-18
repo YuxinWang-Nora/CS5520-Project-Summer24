@@ -1,11 +1,37 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, Button } from 'react-native';
+import React, { useState, useLayoutEffect } from 'react';
 
 export default function GoalDetails({ navigation, route }) {
-    console.log("route", route);
+    const [textColor, setTextColor] = useState('black');
+    const [headerTitle, setHeaderTitle] = useState(route.params.goalObject.text);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: headerTitle,
+            headerRight: () => (
+                <Button
+                    title="Warning"
+                    onPress={handleWarningPress}
+                    color="white"
+                />
+            ),
+        });
+    }, [navigation, headerTitle]);
+
+    const handleWarningPress = () => {
+        setTextColor('red');
+        setHeaderTitle('Warning!');
+    };
+
     return (
         <View>
-            <Text>You are seeing the detail of the goal with {route.params.goalObject.text} with id {route.params.goalObject.id}</Text>
+            <Text style={{ color: textColor }}>
+                You are seeing the detail of the goal with {route.params.goalObject.text} with id {route.params.goalObject.id}
+            </Text>
+            <Button
+                title="More details"
+                onPress={() => navigation.push('Details', { goalObject: route.params.goalObject })}
+            />
         </View>
-    )
+    );
 }

@@ -35,11 +35,11 @@ export default function Home({ navigation }) {
         });
     }
 
-    function handlePressGoal(pressGoal) {
-        console.log("Goal is pressed", pressGoal);
-        // navigate to the details page and pass the data
-        navigation.navigate('Details', { goalObject: pressGoal });
-    }
+    // function handlePressGoal(pressGoal) {
+    //     console.log("Goal is pressed", pressGoal);
+    //     // navigate to the details page and pass the data
+    //     navigation.navigate('Details', { goalObject: pressGoal });
+    // }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -71,7 +71,8 @@ export default function Home({ navigation }) {
                     data={goals}
                     renderItem={({ item }) => {
                         console.log(item)
-                        return (<GoalItem goal={item} deleteHandler={deleteGoal} pressHandler={handlePressGoal} />)
+                        // return (<GoalItem goal={item} deleteHandler={deleteGoal} pressHandler={handlePressGoal} />)
+                        return (<GoalItem goal={item} deleteHandler={deleteGoal} />)
                     }}>
                 </FlatList>
                 )}

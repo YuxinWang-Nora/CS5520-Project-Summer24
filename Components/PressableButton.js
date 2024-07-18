@@ -1,6 +1,5 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 const PressableButton = ({ children, pressFuction, componentStyle }) => {
     return (
@@ -25,10 +24,10 @@ const styles = StyleSheet.create({
     pressedStyle: {
         opacity: 0.5,
         backgroundColor: 'red',
-        padding: 5,
+        padding: 10,
     },
     defaultStyle: {
-        padding: 5,
+        padding: 10,
         margin: 10,
         backgroundColor: 'beige',
     },

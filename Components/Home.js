@@ -4,6 +4,7 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import React, { useState } from 'react';
+import PressableButton from './PressableButton';
 
 
 export default function Home({ navigation }) {
@@ -35,17 +36,18 @@ export default function Home({ navigation }) {
         });
     }
 
-    // function handlePressGoal(pressGoal) {
-    //     console.log("Goal is pressed", pressGoal);
-    //     // navigate to the details page and pass the data
-    //     navigation.navigate('Details', { goalObject: pressGoal });
-    // }
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.topContainer}>
                 <Header name={appName} theme="dark"> </Header>
-                <Button title="Add a goal" onPress={() => setIsModuleVisiable(true)} />
+                <PressableButton
+                    pressFuction={() => setIsModuleVisiable(true)}
+                    componentStyle={styles.buttonStyle}
+                >
+                    <Text style={styles.subtilte}>
+                        Add a goal
+                    </Text>
+                </PressableButton>
             </View>
 
             <Input
@@ -99,13 +101,13 @@ const styles = StyleSheet.create({
     },
 
     topContainer: {
-        flex: 1,
+        flex: 1.5,
         backgroundColor: 'white',
         alignItems: 'center',
     },
 
     bottomContainer: {
-        flex: 4,
+        flex: 5,
         backgroundColor: '#fdf',
         alignItems: 'center',
         rowGap: 10,
@@ -115,5 +117,18 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         borderRadius: 10,
+    },
+
+    buttonStyle: {
+        boarderRadius: 10,
+        padding: 10,
+        margin: 10,
+    },
+
+    subtilte: {
+        color: 'purple',
+        fontSize: 20,
+        margin: 10,
+        borderRadius: 20,
     },
 });

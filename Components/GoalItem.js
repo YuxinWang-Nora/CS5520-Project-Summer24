@@ -10,7 +10,11 @@ const GoalItem = ({ goal, deleteHandler }) => {
             <Pressable
                 android_ripple={{ color: 'pink' }}
                 onPress={() => navigation.navigate('Details', { goalObject: goal })}
-                style={styles.pressable}
+                style={(pressed) => {
+                    console.log(pressed);
+                    // use an array to return multiple styles
+                    return [styles.horizontalContainer, pressed && styles.pressedStyle];
+                }}
             >
                 <Text style={styles.textStyle}>{goal.text}</Text>
                 <Button title="X" onPress={() => deleteHandler(goal.id)} />
@@ -33,11 +37,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'black',
     },
-    pressable: {
+    horizontalContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        backgroundColor: 'grey',
         alignItems: 'center',
         padding: 10, // Add padding to the pressable area
+    },
+    pressedStyle: {
+        opacity: 0.5,
+        backgroundColor: 'red',
     }
 });
 

@@ -24,10 +24,10 @@ const styles = StyleSheet.create({
     pressedStyle: {
         opacity: 0.5,
         backgroundColor: 'red',
-        padding: 10,
+        padding: 5,
     },
     defaultStyle: {
-        padding: 10,
+        padding: 5,
         margin: 10,
         backgroundColor: 'beige',
     },

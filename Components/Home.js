@@ -121,14 +121,15 @@ const styles = StyleSheet.create({
 
     buttonStyle: {
         boarderRadius: 10,
-        padding: 10,
+        padding: 5,
         margin: 10,
     },
 
     subtilte: {
         color: 'purple',
         fontSize: 20,
-        margin: 10,
+        //margin: 10,
+        padding: 5,
         borderRadius: 20,
     },
 });

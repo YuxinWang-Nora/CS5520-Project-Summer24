@@ -17,7 +17,7 @@ export default function Home({ navigation }) {
     const [isModuleVisiable, setIsModuleVisiable] = useState(false);
 
     useEffect(() => {
-        onSnapshot(collection(database, "goals"), (querySnapshot) => {
+        const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
             let newArray = [];
             if (!querySnapshot.empty) {
                 querySnapshot.forEach((doc) => {
@@ -30,6 +30,9 @@ export default function Home({ navigation }) {
             }
             setGoals(newArray);
         })
+        return () => {
+            unsubscribe();
+        }
     }, []);
 
     function handleInputData(data) {

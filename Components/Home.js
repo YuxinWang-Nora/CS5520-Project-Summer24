@@ -6,7 +6,7 @@ import GoalItem from './GoalItem';
 import React, { useState, useEffect } from 'react';
 import PressableButton from './PressableButton';
 import { database } from '../Firebase/firebaseSetup';
-import { writeToDB } from '../Firebase/firebaseHelper';
+import { writeToDB, deleteFromDB } from '../Firebase/firebaseHelper';
 import { collection, onSnapshot } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
@@ -27,8 +27,8 @@ export default function Home({ navigation }) {
                     // goal.id = doc.id;
                     // setGoals((currentGoals) => [...currentGoals, goal]);
                 });
-                setGoals(newArray);
             }
+            setGoals(newArray);
         })
     }, []);
 
@@ -51,9 +51,10 @@ export default function Home({ navigation }) {
     }
 
     function deleteGoal(id) {
-        setGoals((currentGoals) => {
-            return currentGoals.filter((goal) => goal.id !== id);
-        });
+        // setGoals((currentGoals) => {
+        //     return currentGoals.filter((goal) => goal.id !== id);
+        // });
+        deleteFromDB(id, "goals");
     }
 
     return (

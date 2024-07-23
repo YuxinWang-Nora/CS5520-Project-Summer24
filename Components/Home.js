@@ -5,6 +5,7 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import React, { useState } from 'react';
 import PressableButton from './PressableButton';
+import { database } from '../Firebase/firebaseSetup';
 
 
 export default function Home({ navigation }) {

@@ -3,10 +3,11 @@ import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, Fl
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PressableButton from './PressableButton';
 import { database } from '../Firebase/firebaseSetup';
-
+import { writeToDB } from '../Firebase/firebaseHelper';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
     const appName = "My First App";
@@ -15,16 +16,34 @@ export default function Home({ navigation }) {
     const [goals, setGoals] = useState([]);
     const [isModuleVisiable, setIsModuleVisiable] = useState(false);
 
+    useEffect(() => {
+        onSnapshot(collection(database, "goals"), (querySnapshot) => {
+            let newArray = [];
+            if (!querySnapshot.empty) {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.data());
+                    newArray.push({ ...doc.data(), id: doc.id });
+                    // const goal = doc.data();
+                    // goal.id = doc.id;
+                    // setGoals((currentGoals) => [...currentGoals, goal]);
+                });
+                setGoals(newArray);
+            }
+        })
+    }, []);
+
     function handleInputData(data) {
         console.log("callback fn called", data);
         //setReceivedText(data);
         setIsModuleVisiable(false);
 
         // define a new object {text: data} 
-        const newGoal = { text: data, id: Math.random() };
+        const newGoal = { text: data };
         setGoals((currentGoals) =>
             [...currentGoals, newGoal]
         );
+
+        writeToDB(newGoal, "goals");
     }
 
     function hideModule() {

@@ -1,5 +1,6 @@
 import { View, Text, Button } from 'react-native';
 import React, { useState, useLayoutEffect } from 'react';
+import { updateDB } from '../Firebase/firebaseHelper';
 
 export default function GoalDetails({ navigation, route }) {
     const [textColor, setTextColor] = useState('black');
@@ -21,6 +22,8 @@ export default function GoalDetails({ navigation, route }) {
     const handleWarningPress = () => {
         setTextColor('red');
         setHeaderTitle('Warning!');
+        console.log(route.params.goalObject)
+        updateDB(route.params.goalObject.id, 'goals', { warning: true });
     };
 
     return (

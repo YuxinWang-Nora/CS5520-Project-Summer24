@@ -1,6 +1,7 @@
 import { View, Text, Button } from 'react-native';
 import React, { useState, useLayoutEffect } from 'react';
 import { updateDB } from '../Firebase/firebaseHelper';
+import GoalUsers from './GoalUsers';
 
 export default function GoalDetails({ navigation, route }) {
     const [textColor, setTextColor] = useState('black');
@@ -35,6 +36,7 @@ export default function GoalDetails({ navigation, route }) {
                 title="More details"
                 onPress={() => navigation.push('Details', { goalObject: route.params.goalObject })}
             />
+            <GoalUsers />
         </View>
     );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { writeToDB } from "../Firebase/firebaseHelper";
 
-const GoalUsers = () => {
+const GoalUsers = ({ id }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const GoalUsers = () => {
                 const data = await response.json();
                 setUsers(data);
                 data.forEach((user) => {
-                    writeToDB(user, 'godls/${user.id}/users');
+                    writeToDB(user, `goals/${id}/users`);
                 });
             } catch (err) {
                 console.log(err);

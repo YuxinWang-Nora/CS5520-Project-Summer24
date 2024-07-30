@@ -6,11 +6,13 @@ import Home from './Components/Home';
 import GoalDetails from './Components/GoalDetails';
 import Login from './Components/Login';
 import SignUp from './Components/Signup';
+import Profile from './Components/Profile';
 import { app } from './Firebase/firebaseSetup';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,9 +38,18 @@ const MainStack = <>
   <Stack.Screen
     name="Home"
     component={Home}
-    options={{
+    options={({ navigation }) => ({
       title: 'All goals',
-    }}
+      headerRight: () => (
+        <Ionicons
+          name="person-circle"
+          size={30}
+          color="white"
+          onPress={() => navigation.navigate('Profile')}
+          style={{ marginRight: 10 }}
+        />
+      )
+    })}
   />
 
   <Stack.Screen
@@ -53,6 +64,13 @@ const MainStack = <>
     component={Login}
     options={{
       title: 'Login',
+    }} />
+
+  <Stack.Screen
+    name="Profile"
+    component={Profile}
+    options={{
+      title: 'Profile',
     }}
   />
 </>;

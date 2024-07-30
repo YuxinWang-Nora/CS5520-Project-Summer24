@@ -22,7 +22,7 @@ export default function SignUp({ navigation }) {
             Alert.alert("User registered successfully");
         } catch (error) {
             console.log(error);
-            Alert.alert("An error occurred");
+            Alert.alert({ error });
         }
     }
 
@@ -37,18 +37,21 @@ export default function SignUp({ navigation }) {
             <TextInput placeholder="Email"
                 onChangeText={(text) => setEmail(text)}
                 value={email}
+                style={styles.inputStyle}
             />
             <Text> Password</Text>
             <TextInput placeholder="Password"
                 onChangeText={(text) => setPassword(text)}
                 value={password}
                 secureTextEntry={true}
+                style={styles.inputStyle}
             />
             <Text> Confirm Password</Text>
             <TextInput placeholder="Confirm Password"
                 onChangeText={(text) => setConfirmPassword(text)}
                 value={confirmPassword}
                 secureTextEntry={true}
+                style={styles.inputStyle}
             />
 
             <Button title="Register" onPress={handleRegister} />

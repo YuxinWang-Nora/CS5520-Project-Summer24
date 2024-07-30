@@ -1,14 +1,24 @@
 import React from "react";
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleLogin() {
-
+    const handleLogin = async () => {
+        const auth = getAuth();
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log(user);
+            navigation.replace('Home');
+        } catch (error) {
+            console.log(error);
+            Alert.alert({ error });
+        }
     }
 
     function handleSignUp() {
@@ -22,7 +32,6 @@ export default function Login({ navigation }) {
             <TextInput placeholder="Email"
                 onChangeText={(text) => setEmail(text)}
                 value={email}
-                secureTextEntry={true}
                 style={styles.inputStyle}
             />
             <Text> Password</Text>
@@ -30,6 +39,7 @@ export default function Login({ navigation }) {
                 onChangeText={(text) => setPassword(text)}
                 value={password}
                 secureTextEntry={true}
+                style={styles.inputStyle}
             />
 
             <Button title="Login" onPress={handleLogin} />

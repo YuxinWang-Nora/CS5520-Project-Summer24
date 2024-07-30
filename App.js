@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Components/Home';
 import GoalDetails from './Components/GoalDetails';
+import Login from './Components/Login';
+import SignUp from './Components/Signup';
 import { app } from './Firebase/firebaseSetup';
 
 const Stack = createNativeStackNavigator();
@@ -12,7 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Home'
+        initialRouteName='SignUp'
         screenOptions={{
           headerStyle: {
             backgroundColor: 'purple',
@@ -34,6 +36,22 @@ export default function App() {
           options={({ route }) => ({
             title: route.params?.goalObject.text
           })} />
+
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            title: 'Login',
+          }}
+        />
+
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{
+            title: 'Sign Up',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )

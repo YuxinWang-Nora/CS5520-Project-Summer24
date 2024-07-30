@@ -5,6 +5,8 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import React, { useState, useEffect } from 'react';
 import PressableButton from './PressableButton';
+import Login from './Login';
+import SignUp from './Signup';
 import { database } from '../Firebase/firebaseSetup';
 import { writeToDB, deleteFromDB } from '../Firebase/firebaseHelper';
 import { collection, onSnapshot } from 'firebase/firestore';

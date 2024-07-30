@@ -1,11 +1,11 @@
 import { addDoc, collection } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 import { deleteDoc, doc } from "firebase/firestore";
-import { updateDoc } from "firebase/firestore";
+import { updateDoc, getDocs } from "firebase/firestore";
 
-export async function writeToDB(goal, collectionName) {
+export async function writeToDB(date, col, docId, subCol) {
     try {
-        await addDoc(collection(database, collectionName), goal);
+        await addDoc(collection(database, col), date);
     }
     catch (err) {
         console.log(err)
@@ -27,5 +27,19 @@ export async function updateDB(id, collectionName, updatedGoal) {
     }
     catch (err) {
         console.log(err)
+    }
+}
+
+export async function readAllData(collectionName) {
+    try {
+        const querySnapshot = await getDocs(collection(database, collectionName));
+        const dataArray = [];
+        querySnapshot.forEach((doc) => {
+            dataArray.push({ ...doc.data(), id: doc.id });
+        });
+        console.log("array from the database", dataArray);
+        return dataArray;
+    } catch (err) {
+        console.log(err);
     }
 }

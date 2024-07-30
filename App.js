@@ -7,10 +7,69 @@ import GoalDetails from './Components/GoalDetails';
 import Login from './Components/Login';
 import SignUp from './Components/Signup';
 import { app } from './Firebase/firebaseSetup';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './Firebase/firebaseSetup';
 
 const Stack = createNativeStackNavigator();
 
+const AuthStack = <>
+  <Stack.Screen
+    name="Login"
+    component={Login}
+    options={{
+      title: 'Login',
+    }}
+  />
+
+  <Stack.Screen
+    name="SignUp"
+    component={SignUp}
+    options={{
+      title: 'Sign Up',
+    }}
+  />
+</>;
+
+const MainStack = <>
+  <Stack.Screen
+    name="Home"
+    component={Home}
+    options={{
+      title: 'All goals',
+    }}
+  />
+
+  <Stack.Screen
+    name="Details"
+    component={GoalDetails}
+    options={({ route }) => ({
+      title: route.params?.goalObject.text
+    })} />
+
+  <Stack.Screen
+    name="Login"
+    component={Login}
+    options={{
+      title: 'Login',
+    }}
+  />
+</>;
+
 export default function App() {
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsUserAuthenticated(true);
+      } else {
+        setIsUserAuthenticated(false);
+      }
+    }
+    )
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -22,37 +81,54 @@ export default function App() {
           headerTintColor: 'white',
         }}
       >
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            title: 'All goals',
-          }}
-        />
-
-        <Stack.Screen
-          name="Details"
-          component={GoalDetails}
-          options={({ route }) => ({
-            title: route.params?.goalObject.text
-          })} />
-
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            title: 'Login',
-          }}
-        />
-
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{
-            title: 'Sign Up',
-          }}
-        />
+        {isUserAuthenticated ? MainStack : AuthStack}
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
+
+// return (
+//   <NavigationContainer>
+//     <Stack.Navigator
+//       initialRouteName='SignUp'
+//       screenOptions={{
+//         headerStyle: {
+//           backgroundColor: 'purple',
+//         },
+//         headerTintColor: 'white',
+//       }}
+//     >
+//       <Stack.Screen
+//         name="Home"
+//         component={Home}
+//         options={{
+//           title: 'All goals',
+//         }}
+//       />
+
+//       <Stack.Screen
+//         name="Details"
+//         component={GoalDetails}
+//         options={({ route }) => ({
+//           title: route.params?.goalObject.text
+//         })} />
+
+//       <Stack.Screen
+//         name="Login"
+//         component={Login}
+//         options={{
+//           title: 'Login',
+//         }}
+//       />
+
+//       <Stack.Screen
+//         name="SignUp"
+//         component={SignUp}
+//         options={{
+//           title: 'Sign Up',
+//         }}
+//       />
+//     </Stack.Navigator>
+//   </NavigationContainer>
+//   )
+// }

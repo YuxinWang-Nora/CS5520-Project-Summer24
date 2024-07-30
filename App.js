@@ -10,7 +10,7 @@ import Profile from './Components/Profile';
 import { app } from './Firebase/firebaseSetup';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -69,9 +69,26 @@ const MainStack = <>
   <Stack.Screen
     name="Profile"
     component={Profile}
-    options={{
+    options={({ navigation }) => ({
       title: 'Profile',
-    }}
+      headerRight: () => (
+        <Ionicons
+          name="log-out"
+          size={30}
+          color="white"
+          onPress={() => {
+            try {
+              signOut(auth);
+              navigation.replace('Login');
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+          style={{ marginRight: 10 }}
+        />
+      )
+    })
+    }
   />
 </>;
 

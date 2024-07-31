@@ -4,15 +4,111 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Components/Home';
 import GoalDetails from './Components/GoalDetails';
+import Login from './Components/Login';
+import SignUp from './Components/Signup';
+import Profile from './Components/Profile';
 import { app } from './Firebase/firebaseSetup';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from './Firebase/firebaseSetup';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 
+const AuthStack = <>
+  <Stack.Screen
+    name="Login"
+    component={Login}
+    options={{
+      title: 'Login',
+    }}
+  />
+
+  <Stack.Screen
+    name="SignUp"
+    component={SignUp}
+    options={{
+      title: 'Sign Up',
+    }}
+  />
+</>;
+
+const MainStack = <>
+  <Stack.Screen
+    name="Home"
+    component={Home}
+    options={({ navigation }) => ({
+      title: 'All goals',
+      headerRight: () => (
+        <Ionicons
+          name="person-circle"
+          size={30}
+          color="white"
+          onPress={() => navigation.navigate('Profile')}
+          style={{ marginRight: 10 }}
+        />
+      )
+    })}
+  />
+
+  <Stack.Screen
+    name="Details"
+    component={GoalDetails}
+    options={({ route }) => ({
+      title: route.params?.goalObject.text
+    })} />
+
+  <Stack.Screen
+    name="Login"
+    component={Login}
+    options={{
+      title: 'Login',
+    }} />
+
+  <Stack.Screen
+    name="Profile"
+    component={Profile}
+    options={({ navigation }) => ({
+      title: 'Profile',
+      headerRight: () => (
+        <Ionicons
+          name="log-out"
+          size={30}
+          color="white"
+          onPress={() => {
+            try {
+              signOut(auth);
+              navigation.replace('Login');
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+          style={{ marginRight: 10 }}
+        />
+      )
+    })
+    }
+  />
+</>;
+
 export default function App() {
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsUserAuthenticated(true);
+      } else {
+        setIsUserAuthenticated(false);
+      }
+    }
+    )
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Home'
+        initialRouteName='SignUp'
         screenOptions={{
           headerStyle: {
             backgroundColor: 'purple',
@@ -20,21 +116,54 @@ export default function App() {
           headerTintColor: 'white',
         }}
       >
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            title: 'All goals',
-          }}
-        />
-
-        <Stack.Screen
-          name="Details"
-          component={GoalDetails}
-          options={({ route }) => ({
-            title: route.params?.goalObject.text
-          })} />
+        {isUserAuthenticated ? MainStack : AuthStack}
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
+
+// return (
+//   <NavigationContainer>
+//     <Stack.Navigator
+//       initialRouteName='SignUp'
+//       screenOptions={{
+//         headerStyle: {
+//           backgroundColor: 'purple',
+//         },
+//         headerTintColor: 'white',
+//       }}
+//     >
+//       <Stack.Screen
+//         name="Home"
+//         component={Home}
+//         options={{
+//           title: 'All goals',
+//         }}
+//       />
+
+//       <Stack.Screen
+//         name="Details"
+//         component={GoalDetails}
+//         options={({ route }) => ({
+//           title: route.params?.goalObject.text
+//         })} />
+
+//       <Stack.Screen
+//         name="Login"
+//         component={Login}
+//         options={{
+//           title: 'Login',
+//         }}
+//       />
+
+//       <Stack.Screen
+//         name="SignUp"
+//         component={SignUp}
+//         options={{
+//           title: 'Sign Up',
+//         }}
+//       />
+//     </Stack.Navigator>
+//   </NavigationContainer>
+//   )
+// }

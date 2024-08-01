@@ -5,33 +5,28 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import React, { useState, useEffect } from 'react';
 import PressableButton from './PressableButton';
-import Login from './Login';
-import SignUp from './Signup';
-import { database } from '../Firebase/firebaseSetup';
+import { auth, database } from '../Firebase/firebaseSetup';
 import { writeToDB, deleteFromDB } from '../Firebase/firebaseHelper';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
     const appName = "My First App";
-    //const [text, setText] = useState('');
-    //const [receivedText, setReceivedText] = useState('');
     const [goals, setGoals] = useState([]);
     const [isModuleVisiable, setIsModuleVisiable] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
-            let newArray = [];
-            if (!querySnapshot.empty) {
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.data());
-                    newArray.push({ ...doc.data(), id: doc.id });
-                    // const goal = doc.data();
-                    // goal.id = doc.id;
-                    // setGoals((currentGoals) => [...currentGoals, goal]);
-                });
-            }
-            setGoals(newArray);
-        })
+        const unsubscribe = onSnapshot(
+            query(collection(database, "goals"), where("owner", "==", auth.currentUser.uid)),
+            (querySnapshot) => {
+                let newArray = [];
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        console.log(doc.data());
+                        newArray.push({ ...doc.data(), id: doc.id });
+                    });
+                }
+                setGoals(newArray);
+            })
         return () => {
             unsubscribe();
         }
@@ -48,7 +43,7 @@ export default function Home({ navigation }) {
             [...currentGoals, newGoal]
         );
 
-        writeToDB(newGoal, "goals");
+        writeToDB(newGoal, "goals", auth.currentUser.uid);
     }
 
     function hideModule() {

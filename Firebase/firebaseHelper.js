@@ -3,12 +3,11 @@ import { database } from "./firebaseSetup";
 import { deleteDoc, doc } from "firebase/firestore";
 import { updateDoc, getDocs } from "firebase/firestore";
 
-export async function writeToDB(date, col, docId, subCol) {
+export async function writeToDB(data, col, uid) {
     try {
-        await addDoc(collection(database, col), date);
-    }
-    catch (err) {
-        console.log(err)
+        await addDoc(collection(database, col), { ...data, owner: uid });
+    } catch (err) {
+        console.log(err);
     }
 }
 

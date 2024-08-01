@@ -9,8 +9,14 @@ export default function Profile() {
     return (
         <View style={styles.container}>
             <Text>Profile</Text>
-            <Text>{user.email}</Text>
-            <Text>{user.uid}</Text>
+            {user ? (
+                <>
+                    <Text>{user.email}</Text>
+                    <Text>{user.uid}</Text>
+                </>
+            ) : (
+                <Text>No user is currently logged in.</Text>
+            )}
         </View>
     )
 }

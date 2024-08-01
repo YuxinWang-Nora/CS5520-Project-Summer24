@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet, Alert } from 'react-native';
+import { View, Button, StyleSheet, Alert, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function ImageManager() {
@@ -31,13 +31,18 @@ export default function ImageManager() {
             quality: 0.5,
         });
 
-        setImageUri(image.uri);
+        if (!image.canceled && image.assets && image.assets.length > 0) {
+            setImageUri(image.assets[0].uri);
+        }
     };
 
 
     return (
         <View style={styles.container}>
-            <Button title="Open Camera" onPress={takeImageHandler} />
+            <Button title="Take a photo" onPress={takeImageHandler} />
+            <View style={styles.image}>
+                {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+            </View>
         </View>
     );
 }
@@ -47,5 +52,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,
+    },
+    image: {
+        width: 200,
+        height: 200,
+        marginTop: 10,
     },
 });

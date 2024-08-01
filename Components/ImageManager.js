@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Button, StyleSheet, Alert, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function ImageManager() {
+export default function ImageManager({ onImageTaken }) {
     const [status, requestPermission] = ImagePicker.useCameraPermissions();
     const [imageUri, setImageUri] = useState(null);
 
@@ -33,6 +33,10 @@ export default function ImageManager() {
 
         if (!image.canceled && image.assets && image.assets.length > 0) {
             setImageUri(image.assets[0].uri);
+            // could not wirte "onImageTaken(uri);" here because the uri is not upadated yet
+            onImageTaken(image.assets[0].uri);
+        } else {
+            setImageUri(null);
         }
     };
 

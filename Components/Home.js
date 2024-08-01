@@ -13,6 +13,7 @@ export default function Home({ navigation }) {
     const appName = "My First App";
     const [goals, setGoals] = useState([]);
     const [isModuleVisiable, setIsModuleVisiable] = useState(false);
+    const [reveivedImageUri, setReceivedImageUri] = useState(null);
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -32,13 +33,19 @@ export default function Home({ navigation }) {
         }
     }, []);
 
-    function handleInputData(data) {
-        console.log("callback fn called", data);
+    function handleInputData(data, imageUri) {
+        console.log("input goal text", data);
+        console.log("input image uri", imageUri);
         //setReceivedText(data);
         setIsModuleVisiable(false);
 
         // define a new object {text: data} 
-        const newGoal = { text: data };
+        // const newGoal = { text: data };
+        // setGoals((currentGoals) =>
+        //     [...currentGoals, newGoal]
+        // );
+
+        const newGoal = { text: data, imageUri: imageUri };
         setGoals((currentGoals) =>
             [...currentGoals, newGoal]
         );

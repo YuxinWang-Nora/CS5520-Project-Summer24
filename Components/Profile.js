@@ -11,7 +11,7 @@ export default function Profile() {
                 {auth.currentUser ? (
                     <>
                         <Text>{auth.currentUser.email}</Text>
-                        <Text>{auth.currentUserr.uid}</Text>
+                        <Text>{auth.currentUser.uid}</Text>
                     </>
                 ) : (
                     <Text>No user is currently logged in.</Text>

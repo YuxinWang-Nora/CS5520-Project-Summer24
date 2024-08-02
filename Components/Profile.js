@@ -4,15 +4,14 @@ import { auth } from "../Firebase/firebaseSetup";
 
 
 export default function Profile() {
-    const user = auth.currentUser;
     return (
         <View style={styles.container}>
             <Text>Profile</Text>
             <View>
-                {user ? (
+                {auth.currentUser ? (
                     <>
-                        <Text>{user.email}</Text>
-                        <Text>{user.uid}</Text>
+                        <Text>{auth.currentUser.email}</Text>
+                        <Text>{auth.currentUserr.uid}</Text>
                     </>
                 ) : (
                     <Text>No user is currently logged in.</Text>

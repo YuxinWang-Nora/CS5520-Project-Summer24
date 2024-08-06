@@ -1,4 +1,4 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Image } from 'react-native';
 import React, { useState, useLayoutEffect } from 'react';
 import { updateDB } from '../Firebase/firebaseHelper';
 import GoalUsers from './GoalUsers';
@@ -26,7 +26,7 @@ export default function GoalDetails({ navigation, route }) {
     }, [navigation, headerTitle]);
 
     useEffect(() => {
-        if (route.params.goalObject) {
+        if (route?.params?.goalObject?.imageUri) {
             const fetchImageUrl = async () => {
                 try {
                     console.log(route.params.goalObject.imageUri);
@@ -58,6 +58,7 @@ export default function GoalDetails({ navigation, route }) {
                 title="More details"
                 onPress={() => navigation.push('Details', { goalObject: route.params.goalObject })}
             />
+            {imageUrl && <Image source={{ uri: imageUrl }} style={{ width: 200, height: 200 }} />}
             <LocationManager />
             {/* <GoalUsers id={route.params.goalObject.id} /> */}
         </View>

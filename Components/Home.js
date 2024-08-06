@@ -8,6 +8,8 @@ import PressableButton from './PressableButton';
 import { auth, database } from '../Firebase/firebaseSetup';
 import { writeToDB, deleteFromDB } from '../Firebase/firebaseHelper';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { storage } from '../Firebase/firebaseSetup';
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Home({ navigation }) {
     const appName = "My First App";
@@ -33,11 +35,38 @@ export default function Home({ navigation }) {
         }
     }, []);
 
+    async function retrieveUploadedImage(imageUri) {
+        try {
+            const respsone = await fetch(imageUri);
+            if (!respsone.ok) {
+                throw new Error('Image response was not ok');
+            }
+            const imageBlob = await respsone.blob();
+            console.log(imageBlob);
+
+            const imageName = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+            const imageRef = ref(storage, `images/${imageName}`);
+
+            const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
+
+            // Get the full path of the uploaded image
+            const imageFullPath = uploadResult.metadata.fullPath;
+
+            console.log("Image uploaded successfully. Full path:", imageFullPath);
+            return imageFullPath;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     function handleInputData(data, imageUri) {
         console.log("input goal text", data);
         console.log("input image uri", imageUri);
         //setReceivedText(data);
         setIsModuleVisiable(false);
+        if (imageUri) {
+            retrieveUploadedImage(imageUri);
+        }
 
         // define a new object {text: data} 
         // const newGoal = { text: data };

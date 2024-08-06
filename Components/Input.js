@@ -1,15 +1,18 @@
 import { Button, Text, TextInput, StyleSheet, View, Modal, Image } from 'react-native';
 import React, { useState } from 'react';
+import ImageManager from './ImageManager';
 
 const Input = (props) => {
     const [text, setText] = useState('');
     const [showThankYou, setShowThankYou] = useState(false);
+    const [imageUri, setImageUri] = useState(null);
 
 
     const handleConfirm = () => {
         console.log("User has typed", text);
+        console.log("User has selected image", imageUri);
         // Call the received callback function
-        props.inputHandler(text);
+        props.inputHandler(text, imageUri);
         props.hideModule();
         setText('');
     }
@@ -19,10 +22,15 @@ const Input = (props) => {
         setText('');
     }
 
+    const handleImageTaken = (uri) => {
+        setImageUri(uri);
+    }
+
     return (
         <Modal animationType='slide' visible={props.isModuleVisiable} transparent={true}>
             <View style={styles.modalBackground}>
                 <View style={styles.container}>
+                    <ImageManager onImageTaken={handleImageTaken} />
                     <Image
                         style={styles.imageStyle}
                         source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
@@ -33,7 +41,6 @@ const Input = (props) => {
                         source={require('../assets/2617812.png')}
                         alt="target image from assets folder"
                     />
-
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Type here to input!"

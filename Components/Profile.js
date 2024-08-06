@@ -4,7 +4,6 @@ import { auth } from "../Firebase/firebaseSetup";
 
 
 export default function Profile() {
-
     return (
         <View style={styles.container}>
             <Text>Profile</Text>

@@ -59,13 +59,14 @@ export default function Home({ navigation }) {
         }
     }
 
-    function handleInputData(data, imageUri) {
+    async function handleInputData(data, imageUri) {
         console.log("input goal text", data);
         console.log("input image uri", imageUri);
+        let image = '';
         //setReceivedText(data);
         setIsModuleVisiable(false);
         if (imageUri) {
-            retrieveUploadedImage(imageUri);
+            image = await retrieveUploadedImage(imageUri);
         }
 
         // define a new object {text: data} 
@@ -74,7 +75,7 @@ export default function Home({ navigation }) {
         //     [...currentGoals, newGoal]
         // );
 
-        const newGoal = { text: data, imageUri: imageUri };
+        const newGoal = { text: data, imageUri: image };
         setGoals((currentGoals) =>
             [...currentGoals, newGoal]
         );

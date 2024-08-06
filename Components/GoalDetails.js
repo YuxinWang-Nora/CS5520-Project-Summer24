@@ -5,6 +5,7 @@ import GoalUsers from './GoalUsers';
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from '../Firebase/firebaseSetup';
 import { useEffect } from 'react';
+import LocationManager from './LocationManager';
 
 export default function GoalDetails({ navigation, route }) {
     const [textColor, setTextColor] = useState('black');
@@ -57,6 +58,7 @@ export default function GoalDetails({ navigation, route }) {
                 title="More details"
                 onPress={() => navigation.push('Details', { goalObject: route.params.goalObject })}
             />
+            <LocationManager />
             {/* <GoalUsers id={route.params.goalObject.id} /> */}
         </View>
     );

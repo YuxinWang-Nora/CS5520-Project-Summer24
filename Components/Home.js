@@ -8,6 +8,8 @@ import PressableButton from './PressableButton';
 import { auth, database } from '../Firebase/firebaseSetup';
 import { writeToDB, deleteFromDB } from '../Firebase/firebaseHelper';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { storage } from '../Firebase/firebaseSetup';
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Home({ navigation }) {
     const appName = "My First App";
@@ -33,11 +35,39 @@ export default function Home({ navigation }) {
         }
     }, []);
 
-    function handleInputData(data, imageUri) {
+    async function retrieveUploadedImage(imageUri) {
+        try {
+            const respsone = await fetch(imageUri);
+            if (!respsone.ok) {
+                throw new Error('Image response was not ok');
+            }
+            const imageBlob = await respsone.blob();
+            console.log(imageBlob);
+
+            const imageName = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+            const imageRef = ref(storage, `images/${imageName}`);
+
+            const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
+
+            // Get the full path of the uploaded image
+            const imageFullPath = uploadResult.metadata.fullPath;
+
+            console.log("Image uploaded successfully. Full path:", imageFullPath);
+            return imageFullPath;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handleInputData(data, imageUri) {
         console.log("input goal text", data);
         console.log("input image uri", imageUri);
+        let image = '';
         //setReceivedText(data);
         setIsModuleVisiable(false);
+        if (imageUri) {
+            image = await retrieveUploadedImage(imageUri);
+        }
 
         // define a new object {text: data} 
         // const newGoal = { text: data };
@@ -45,7 +75,7 @@ export default function Home({ navigation }) {
         //     [...currentGoals, newGoal]
         // );
 
-        const newGoal = { text: data, imageUri: imageUri };
+        const newGoal = { text: data, imageUri: image };
         setGoals((currentGoals) =>
             [...currentGoals, newGoal]
         );

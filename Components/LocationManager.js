@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Button, Text, StyleSheet, Image } from 'react-native';
 import * as Location from 'expo-location';
 import { mapsApiKey } from '@env';
+import { useNavigation } from '@react-navigation/native';
 
 const LocationManager = () => {
     const [location, setLocation] = useState(null);
     const [status, requestPermission] = Location.useForegroundPermissions();
     const [errorMsg, setErrorMsg] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         (async () => {
@@ -56,6 +58,10 @@ const LocationManager = () => {
                 />
             )}
             {errorMsg && <Text>{errorMsg}</Text>}
+            <Button
+                title="Go to Map"
+                onPress={() => navigation.navigate('Map')}
+            />
         </View>
     );
 };

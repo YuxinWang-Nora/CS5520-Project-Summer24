@@ -3,6 +3,8 @@ import { View, Button, Text, StyleSheet, Image } from 'react-native';
 import * as Location from 'expo-location';
 import { mapsApiKey } from '@env';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { writeWithIdToDB } from '../Firebase/firebaseHelper';
+import { auth } from '../Firebase/firebaseSetup';
 
 const LocationManager = () => {
     const [location, setLocation] = useState(null);
@@ -56,6 +58,13 @@ const LocationManager = () => {
 
     const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${location?.latitude},${location?.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location?.latitude},${location?.longitude}&key=${mapsApiKey}`;
 
+    const saveLocationHandler = async () => {
+        if (location) {
+            await writeWithIdToDB(auth.currentUser.uid, 'users', { location });
+            navigation.navigate('Home');
+        }
+    };
+
     return (
         <View style={styles.container}>
             <Button title="Locate Me" onPress={locateUserHandler} />
@@ -69,6 +78,11 @@ const LocationManager = () => {
             <Button
                 title="Let me choose a location"
                 onPress={() => navigation.navigate('Map')}
+            />
+            <Button
+                title="Save my location"
+                onPress={saveLocationHandler}
+                disabled={!location}
             />
         </View>
     );

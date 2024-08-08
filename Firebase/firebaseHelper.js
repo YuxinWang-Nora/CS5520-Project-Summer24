@@ -1,7 +1,7 @@
 import { addDoc, collection } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 import { deleteDoc, doc } from "firebase/firestore";
-import { updateDoc, getDocs } from "firebase/firestore";
+import { updateDoc, getDocs, setDoc } from "firebase/firestore";
 
 export async function writeToDB(data, col, uid) {
     try {
@@ -38,6 +38,14 @@ export async function readAllData(collectionName) {
         });
         console.log("array from the database", dataArray);
         return dataArray;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function writeWithIdToDB(uid, collectionName, location) {
+    try {
+        await setDoc(doc(database, collectionName, uid), { location }, { merge: true });
     } catch (err) {
         console.log(err);
     }

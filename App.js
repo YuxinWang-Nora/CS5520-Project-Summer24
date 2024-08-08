@@ -7,6 +7,7 @@ import GoalDetails from './Components/GoalDetails';
 import Login from './Components/Login';
 import SignUp from './Components/Signup';
 import Profile from './Components/Profile';
+import Map from './Components/Map';
 import { app } from './Firebase/firebaseSetup';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -89,6 +90,14 @@ const MainStack = <>
       )
     })
     }
+  />
+
+  <Stack.Screen
+    name="Map"
+    component={Map}
+    options={{
+      title: 'Map',
+    }}
   />
 </>;
 

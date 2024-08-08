@@ -3,7 +3,7 @@ import { View, Button, Text, StyleSheet, Image } from 'react-native';
 import * as Location from 'expo-location';
 import { mapsApiKey } from '@env';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { writeWithIdToDB } from '../Firebase/firebaseHelper';
+import { writeWithIdToDB, getADoc } from '../Firebase/firebaseHelper';
 import { auth } from '../Firebase/firebaseSetup';
 
 const LocationManager = () => {
@@ -27,6 +27,16 @@ const LocationManager = () => {
             }
         })();
     }, [status, requestPermission]);
+
+    useEffect(() => {
+        async function fetchUserLocation() {
+            const userDoc = await getADoc('users', auth.currentUser.uid);
+            if (userDoc) {
+                setLocation(userDoc.location);
+            }
+        }
+        fetchUserLocation();
+    }, []);
 
     const verifyPermission = async () => {
         if (status && status.granted) {

@@ -43,9 +43,9 @@ export async function readAllData(collectionName) {
     }
 }
 
-export async function writeWithIdToDB(uid, collectionName, location) {
+export async function writeWithIdToDB(uid, collectionName, data) {
     try {
-        await setDoc(doc(database, collectionName, uid), { location }, { merge: true });
+        await setDoc(doc(database, collectionName, uid), data, { merge: true });
     } catch (err) {
         console.log(err);
     }

@@ -12,11 +12,11 @@ const LocationManager = () => {
     const [errorMsg, setErrorMsg] = useState(null);
     const navigation = useNavigation();
     const route = useRoute();
-    console.log(route.params);
 
     useEffect(() => {
         if (route.params?.location) {
             setLocation(route.params.location);
+            console.log("locatin from route", route.params);
         }
     }, [route.params?.location]);
 
@@ -33,9 +33,12 @@ const LocationManager = () => {
             const userDoc = await getADoc('users', auth.currentUser.uid);
             if (userDoc) {
                 setLocation(userDoc.location);
+                console.log("Loaction from firebase", userDoc.location);
             }
         }
-        fetchUserLocation();
+        if (!route.params?.location) {
+            fetchUserLocation();
+        }
     }, []);
 
     const verifyPermission = async () => {

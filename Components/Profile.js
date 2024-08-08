@@ -4,9 +4,7 @@ import * as Location from "expo-location";
 import { auth } from "../Firebase/firebaseSetup";
 import LocationManager from "./LocationManager";
 
-export default function Profile({ route }) {
-    const selectedLocation = route.params?.location;
-
+export default function Profile() {
     return (
         <View style={styles.container}>
             <Text>Profile</Text>
@@ -16,7 +14,6 @@ export default function Profile({ route }) {
                         <Text>{auth.currentUser.email}</Text>
                         <Text>{auth.currentUser.uid}</Text>
                         <LocationManager />
-                        {/* {errorMsg && <Text>{errorMsg}</Text>} */}
                     </View>
                 ) : (
                     <Text>No user is currently logged in.</Text>

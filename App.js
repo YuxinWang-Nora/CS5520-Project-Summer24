@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Components/Home';
@@ -9,12 +9,12 @@ import SignUp from './Components/Signup';
 import Profile from './Components/Profile';
 import Map from './Components/Map';
 import { app } from './Firebase/firebaseSetup';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
 import * as Notifications from 'expo-notifications';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -120,8 +120,6 @@ Notifications.setNotificationHandler({
   handleNotification: async (notification) => {
     return {
       shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
     };
   },
 });
@@ -138,6 +136,14 @@ export default function App() {
       }
     }
     )
+  }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(notification => {
+      console.log("Notification received: ", notification);
+    });
+
+    return () => subscription.remove(); // the cleanup function
   }, []);
 
   return (

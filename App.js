@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
+import * as Notifications from 'expo-notifications';
 
 const Stack = createNativeStackNavigator();
 
@@ -100,6 +101,31 @@ const MainStack = <>
     }}
   />
 </>;
+
+
+Notifications.setNotificationHandler({
+  // handleNotification: async () => {
+  //   return {
+  //     shouldShowAlert: true,
+  //     shouldPlaySound: false,
+  //     shouldSetBadge: false,
+  //   };
+  // },
+  // handleSuccess: notificationId => {
+  //   console.log(`Notification ${notificationId} successfully handled.`);
+  // },
+  // handleError: (notificationId, error) => {
+  //   console.error(`Notification ${notificationId} failed with error: `, error);
+  // },
+  handleNotification: async (notification) => {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    };
+  },
+});
+
 
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);

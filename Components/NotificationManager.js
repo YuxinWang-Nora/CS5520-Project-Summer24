@@ -27,6 +27,7 @@ const NotificationManager = () => {
                 content: {
                     title: "Reminder",
                     body: "Please add a new goal!",
+                    data: { url: "https://www.google.com" },
                 },
                 trigger: {
                     seconds: 5,

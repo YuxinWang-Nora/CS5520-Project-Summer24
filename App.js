@@ -14,6 +14,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
 import * as Notifications from 'expo-notifications';
+import { Linking } from 'react-native';
 
 
 const Stack = createNativeStackNavigator();
@@ -144,6 +145,15 @@ export default function App() {
     });
 
     return () => subscription.remove(); // the cleanup function
+  }, []);
+
+  useEffect(() => {
+    const responseSubscription = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log("Notification response received: ", response);
+      const data = response.notification.request.content.data;
+      Linking.openURL(data.url);
+    });
+    return () => responseSubscription.remove();
   }, []);
 
   return (

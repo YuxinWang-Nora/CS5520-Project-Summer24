@@ -10,14 +10,19 @@ import { writeToDB, deleteFromDB } from '../Firebase/firebaseHelper';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { storage } from '../Firebase/firebaseSetup';
 import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { verifyPermission } from './NotificationManager';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 
 export default function Home({ navigation }) {
     const appName = "My First App";
     const [goals, setGoals] = useState([]);
     const [isModuleVisiable, setIsModuleVisiable] = useState(false);
     const [reveivedImageUri, setReceivedImageUri] = useState(null);
+    const [pushToken, setPushToken] = useState(null);
 
     useEffect(() => {
+        // Fetch user goals
         const unsubscribe = onSnapshot(
             query(collection(database, "goals"), where("owner", "==", auth.currentUser.uid)),
             (querySnapshot) => {
@@ -29,11 +34,65 @@ export default function Home({ navigation }) {
                     });
                 }
                 setGoals(newArray);
-            })
+            });
+
+        // Get the push token
+        const getPushToken = async () => {
+            try {
+                const hasPermission = await verifyPermission();
+                if (!hasPermission) {
+                    return;
+                }
+
+                console.log('Getting push token');
+                const { data: token } = await Notifications.getExpoPushTokenAsync({
+                    projectId: Constants.expoConfig.extra.eas.projectId,
+                    //projectId: "8e89af7d-5b63-413b-8e30-fbce29543e0b"
+                });
+
+                console.log('Expo Push Token:', token);
+                setPushToken(token);
+            }
+            catch (error) {
+                console.log("Error getting push token:", error);
+            }
+        };
+
+        getPushToken();
+
         return () => {
             unsubscribe();
         }
     }, []);
+
+
+    const sendPushNotification = async () => {
+        if (!pushToken) {
+            console.log('Push token is not available');
+            return;
+        }
+        console.log('Sending push notification');
+
+        try {
+            const response = await fetch("https://exp.host/--/api/v2/push/send", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    to: pushToken,
+                    title: "Push Notification",
+                    body: "This is a push notification",
+                }),
+            });
+
+            const data = await response.json();
+            console.log("Push notification sent:", data);
+        } catch (error) {
+            console.log("Error sending push notification:", error);
+        }
+    }
+
 
     async function retrieveUploadedImage(imageUri) {
         try {
@@ -137,6 +196,7 @@ export default function Home({ navigation }) {
                 </FlatList>
                 )}
             </View>
+            <Button title="Send Push Notification" onPress={sendPushNotification} />
             <StatusBar style="auto" />
         </SafeAreaView>
     );
